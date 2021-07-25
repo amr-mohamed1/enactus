@@ -1,11 +1,11 @@
 <?php
   ob_start(); 
   session_start();
-  $page_name = "Enactus Dashboard";
+  $page_name = "Add Member";
   $style = "add_member.css";
-  $script = "";
+  $script = "members.js";
   include "init.php";
-    if(isset($_SESSION['username'])){
+    if(isset($_SESSION['first_name'])){
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empty($_POST["last_name"]) && !empty($_POST["email"]))
 {
     $first_name = filter_var($_POST["first_name"] , FILTER_SANITIZE_STRING);
@@ -23,6 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empt
     $insta = filter_var($_POST["insta"] , FILTER_SANITIZE_URL);
     $linked_in = filter_var($_POST["linked_in"] , FILTER_SANITIZE_URL);
     $about = filter_var($_POST["about"] , FILTER_SANITIZE_STRING);
+    $old = filter_var($_POST["old"] , FILTER_SANITIZE_NUMBER_INT);
     $avatar_name            = $_FILES["img"]["name"];
     $size                   = $_FILES["img"]["size"];
     $tmp_name               = $_FILES["img"]["tmp_name"];
@@ -31,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empt
     @$extention             = strtolower(end(explode(".",$avatar_name)));
     if(in_array($extention,$ext_allowed)){
         $avatar = rand(0,1000000) . "_" . $avatar_name ;
-        $destination = "img/" . $avatar ;
+        $destination = "img/members/" . $avatar ;
 
         
         /*check if info already added*/
@@ -48,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empt
                 </script>";
         }
         else{
-            insert_member ($first_name , $last_name , $email , $phone , $birthday ,$commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$avatar);
+            insert_member ($first_name , $last_name , $email , $phone , $birthday ,$commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$old,$avatar);
             move_uploaded_file($tmp_name,$destination);
         }   
     }else{
@@ -92,7 +93,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empt
 
         <div class="form-group col-md-6">
             <label for="commity">Commity</label>
-            <select class="custom-select"  name="commity" id="commity" required>
+            <select class="custom-select ui search dropdown"  name="commity" id="commity" required>
                 <option selected disabled value="">Choose...</option>
                 <option value="IT">IT</option>
                 <option value="PM">PM</option>
@@ -106,7 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empt
 
         <div class="form-group col-md-6">
             <label for="season">Season</label>
-            <select class="custom-select"  name="season" id="season" required>
+            <select class="custom-select ui search dropdown"  name="season" id="season" required>
                 <option selected disabled value="">Choose...</option>
                 <?php for($i=1 ; $i<=date('Y')-2009 ; $i++){?>
                 <option value="<?php echo (2009 + $i - 1) . " / " . (2009 + $i)?>"><?php echo (2009 + $i - 1) . " / " . (2009 + $i)?></option>
@@ -126,7 +127,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empt
         
         <div class="form-group col-md-6">
             <label>Collage Year</label>
-            <select class="custom-select"  name="collage_year" id="collage_year" required>
+            <select class="custom-select ui search dropdown"  name="collage_year" id="collage_year" required>
                 <option selected disabled value="">Choose...</option>
                 <?php for($i=1 ; $i<=5 ; $i++){?>
                 <option value="<?php echo $i?>">Year <?php echo $i?></option>
@@ -154,18 +155,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["first_name"]) && !empt
             <label>Linked In</label>
             <input style="direction: ltr;" name="linked_in" type="url" class="form-control">
         </div>
-        
+
+        <div class="form-group col-md-6">
+            <label>Member Photo</label>
+            <input style="direction: ltr;padding:0" name="img" type="file" class="form-control">
+        </div>
+
+                
         <div class="form-group col-md-6">
             <label for="old">Old Member ?</label>
-            <select class="custom-select"  name="old" id="old" required>
+            <select class="custom-select ui search dropdown"  name="old" id="old" required>
                 <option selected disabled value="">Choose...</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
-        </div>
-        <div class="form-group col-md-6">
-            <label>Member Photo</label>
-            <input style="direction: ltr;padding:0" name="img" type="file" class="form-control">
         </div>
                 
         <div class="form-group col-md-12">

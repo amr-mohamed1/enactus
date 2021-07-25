@@ -7,25 +7,20 @@
   include "init.php";
 ?>
     <div class="container">
-      <h1 class="pt-5 pb-3">Hollo .... Ahmed</h1>
-      <h3>My Trust 1</h3>
+      <h1 class="pt-5">Hollo .... <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?></h1>
     </div>
     <nav >
       <div class="fixed-top bar d-flex justify-content-end bg-light py-2 px-5 col-sm-12  ">
          
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
+      <a href="get_messages.php">
+        <i class="far fa-comments"></i>
+        <span class="badge badge-pill badge-success notification"><?php echo count_users("id","contact"); ?></span>
       </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
+      <a href="profile.php?from=dashboard&id=<?php echo  $_SESSION['id'] ?>">
+        <i class="fas fa-user-shield"></i>
         <span class="badge-sonar"></span>
       </a>
-      <a href="#">
+      <a href="logout.php">
         <i class="fa fa-power-off"></i>
       </a>
    
@@ -33,7 +28,7 @@
     </nav>
 
     
-<div class="page-wrapper chiller-theme toggled">
+<div class="page-wrapper chiller-theme">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fa fa-bars"></i>
   </a>
@@ -51,133 +46,97 @@
           <li class="header-menu">
             <span>General</span>
           </li>
-          <li class="sidebar-dropdown">
-            <a class="s" href="#">
-              <i class="fa fa-pie-chart "></i>
-              <span>Dashboard</span>
+          <li style="cursor: pointer;" class="sidebar-dropdown">
+            <a class="s">
+              <i class="far fa-plus-square"></i>
+              <span>Add Data</span>
               <span class="badge badge-pill badge-warning">New</span>
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">Dashboard 1
+                  <a href="add_hoster.php">Add Hoster
                     <span class="badge badge-pill badge-success">Pro</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#">Dashboard 2</a>
+                  <a href="add_member.php">Add Member</a>
                 </li>
                 <li>
-                  <a href="#">Dashboard 3</a>
+                  <a href="add_event.php">Add Event</a>
                 </li>
               </ul>
             </div>
           </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-shopping-cart"></i>
-              <span>E-commerce</span>
-              <span class="badge badge-pill badge-danger">3</span>
+          <li style="cursor: pointer;" class="sidebar-dropdown">
+            <a class="s">
+            <i class="far fa-edit"></i>
+              <span>Update Data</span>
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">Products
-
+                  <a href="update_hoster.php">Update Hoster
                   </a>
                 </li>
                 <li>
-                  <a href="#">Orders</a>
+                  <a href="update_about.php">Update About US</a>
                 </li>
                 <li>
-                  <a href="#">Credit cart</a>
+                  <a href="update_member.php">Update Member</a>
+                </li>
+                <li>
+                  <a href="update_event.php">Update Event</a>
                 </li>
               </ul>
             </div>
           </li>
           <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-diamond "></i>
-              <span>Components</span>
+            <a href="about.php">
+              <i class="fal fa-address-card"></i>
+              <span>About us</span>
+              <span class="badge badge-pill badge-danger">3</span>
             </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">General</a>
-                </li>
-                <li>
-                  <a href="#">Panels</a>
-                </li>
-                <li>
-                  <a href="#">Tables</a>
-                </li>
-                <li>
-                  <a href="#">Icons</a>
-                </li>
-                <li>
-                  <a href="#">Forms</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-line-chart "></i>
-              <span>Charts</span>
+            <a href="event.php">
+              <i class="fal fa-calendar-star"></i>
+              <span>Event</span>
+              <span class="badge badge-pill badge-danger">3</span>
             </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">Pie chart</a>
-                </li>
-                <li>
-                  <a href="#">Line chart</a>
-                </li>
-                <li>
-                  <a href="#">Bar chart</a>
-                </li>
-                <li>
-                  <a href="#">Histogram</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-globe"></i>
-              <span>Maps</span>
+            <a href="commities.php">
+              <i class="far fa-users"></i>
+              <span>Committees</span>
             </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">Google maps</a>
-                </li>
-                <li>
-                  <a href="#">Open street map</a>
-                </li>
-              </ul>
-            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="get_opinion.php">
+            <i class="fal fa-user-md-chat"></i>
+              <span>Opinions</span>
+            </a>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="get_messages.php">
+              <i class="far fa-inbox-in"></i>
+              <span>Messages</span>
+            </a>
           </li>
           <li class="header-menu">
             <span>Extra</span>
           </li>
           <li>
-            <a href="#">
-              <i class="fa fa-book"></i>
-              <span>Documentation</span>
+            <a href="profile.php?from=dashboard&id=<?php echo  $_SESSION['id'] ?>">
+              <i class="fal fa-id-card-alt"></i>
+              <span>profile</span>
               <span class="badge badge-pill badge-primary">Beta</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <i class="fa fa-calendar"></i>
-              <span>Calendar</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-folder"></i>
-              <span>Examples</span>
+            <a href="logout.php">
+              <i class="fal fa-sign-out-alt"></i>
+              <span>Logout</span>
             </a>
           </li>
         </ul>
@@ -194,53 +153,47 @@
     <section class=" container py-5">
       <div class="row dashBody  ">
         <div class="dashItem color1  rounded">
-          <h3 class="itemNum">150</h3>
+          <h3 class="itemNum"><?php echo count_users("id","hosters"); ?></h3>
           <h4 class="itemName">High Board</h4>
-          <a href="hosters.php" class="lets">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
+          <a href="hosters.php" class="lets">Lets Go <i class="fal fa-arrow-alt-right"></i></a>
           <i class="fa fa-users fa-2x icon"></i>
         </div><!-- ./dashItem -->
         <div class="dashItem color4  rounded">
-          <h3 class="itemNum">150</h3>
+          <h3 class="itemNum"><?php echo count_users("id","members"); ?></h3>
           <h4 class="itemName">Members</h4>
-          <a href="members.php" class="lets">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
-          <i class="fa fa-users fa-2x icon"></i>
+          <a href="members.php" class="lets">Lets Go <i class="fal fa-arrow-alt-right"></i></a>
+          <i class="fal fa-user-circle icon"></i>
         </div><!-- ./dashItem -->
         <div class="dashItem color2  rounded">
           <h3 class="itemNum">70</h3>
           <h4 class="itemName">About US</h4>
-          <a href="#" class="lets">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
+          <a href="about.php" class="lets">Lets Go <i class="fal fa-arrow-alt-right"></i></a>
           <i class="fa fa-users fa-2x icon"></i>
         </div><!-- ./dashItem -->
         <div class="dashItem color3 changColor rounded">
           <h3 class="itemNum">30</h3>
           <h4 class="itemName">Event</h4>
-          <a href="#" class="lets changColor">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
+          <a href="event.php" class="lets">Lets Go <i class="fal fa-arrow-alt-right"></i></a>
           <i class="fa fa-users fa-2x icon"></i>
           
-        </div><!-- ./dashItem -->
-        <div class="dashItem color4  rounded">
-          <h3 class="itemNum">40</h3>
-          <h4 class="itemName">Old Board</h4>
-          <a href="#" class="lets">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
-          <i class="fa fa-graduation-cap fa-2x icon"></i>
         </div><!-- ./dashItem -->
         <div class="dashItem color3 changColor rounded">
           <h3 class="itemNum">150</h3>
           <h4 class="itemName">Messages</h4>
-          <a href="#" class="lets changColor">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
+          <a href="get_messages.php" class="lets">Lets Go <i class="fal fa-arrow-alt-right"></i></a>
           <i class="fa fa-users fa-2x icon"></i>
           
         </div><!-- ./dashItem -->
         <div class="dashItem color4  rounded">
           <h3 class="itemNum">150</h3>
           <h4 class="itemName">Opinion</h4>
-          <a href="#" class="lets">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
+          <a href="get_opinion.php" class="lets">Lets Go <i class="fal fa-arrow-alt-right"></i></a>
           <i class="fa fa-users fa-2x icon"></i>
         </div><!-- ./dashItem -->
         <div class="dashItem color2  rounded">
           <h3 class="itemNum">150</h3>
           <h4 class="itemName">Commities</h4>
-          <a href="#" class="lets">Lets Go <i class="fa fa-arrow-circle-o-right "></i></a>
+          <a href="commities.php" class="lets">Lets Go <i class="fal fa-arrow-alt-right"></i></a>
           <i class="fa fa-users fa-2x icon"></i>
         </div><!-- ./dashItem -->
       </div><!-- ./dashItem -->

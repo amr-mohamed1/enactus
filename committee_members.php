@@ -1,12 +1,34 @@
 <?php 
 ob_start(); 
 session_start();
-$page_name = "Enactus Members";
+$page_name = "Committee Members";
 $style = "members.css";
 $script = "members.js";
 include "init.php";
 if(isset($_SESSION['first_name'])){
-    $members_data = getAllData("members");
+   $comity = $_GET['comity'];
+
+    if($comity == "ER"){
+        $members_data = getData_with_committee("members","ER");
+    }else if ($comity == "HR"){
+        $members_data = getData_with_committee("members","HR");
+    }else if ($comity == "PM"){
+        $members_data = getData_with_committee("members","PM");
+    }else if ($comity == "Media"){
+        $members_data = getData_with_committee("members","Media");
+    }else if ($comity == "Logistics"){
+        $members_data = getData_with_committee("members","Logistics");
+    }else if ($comity == "Presentation"){
+        $members_data = getData_with_committee("members","Presentation");
+    }else if ($comity == "IT"){
+        $members_data = getData_with_committee("members","IT");
+    }else{
+        header("location:dashboard.php");
+    }
+
+
+
+
     $i = 1;
 ?>
 
@@ -22,9 +44,6 @@ if(isset($_SESSION['first_name'])){
             </div>
             <!-- ./card-header -->
             <div class="card-body">
-              <div class="hosters_options mb-2">
-                <a href="add_member.php" class="btn btn-info">Add <i class="fas fa-user-plus ml-1"></i></a>
-              </div>
               <table class="table table-striped table-bordered table-hover table-responsive">
                 <thead>
                   <tr>

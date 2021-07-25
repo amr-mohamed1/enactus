@@ -1,10 +1,11 @@
 <?php 
-  $hoster = $_GET['hoster'];
-  $pageTitle = $hoster . " data";
+  ob_start(); 
   session_start();
-  if(isset($_SESSION['username']) && isset($_GET['hoster'])) {
-    if($hoster == "High_Board"){
-      include "init.php";    
+  $page_name = "Hosters";
+  $style = "hosters.css";
+  $script = "";
+  include "init.php"; 
+  $HosterData = selectHighBoard();
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -16,29 +17,30 @@
         <div class="col-12">
           <div class="card mt-4">
             <div class="card-header">
-              <h3 class="card-title"><?php echo $hoster ?> Table</h3>
+              <h3 class="card-title">Hosters</h3>
             </div>
             <!-- ./card-header -->
             <div class="card-body">
               <div class="hosters_options mb-2">
-                <a href="hoster_add.php?hoster=<?php echo $hoster?>" class="btn btn-info">Add <i class="fas fa-user-plus ml-1"></i></a>
+                <a href="add_hoster.php" class="btn btn-info">Add <i class="fas fa-user-plus ml-1"></i></a>
               </div>
-              <table class="table table-bordered table-hover">
+              <table style="width: 100% !important" class="table table-striped table-bordered table-hover table-responsive">
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Phone</th>
                     <th>Commity</th>
                     <th>Position</th>
-                    <th>Options</th>
+                    <th>State</th>
+                    <th>Edit</th>
+                    <th>Profile</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php 
-                    if($hoster == "High_Board"){
-                      $HosterData = selectHighBoard();
-                    }
                     $i = 1;
                     foreach($HosterData as $HosterDataInfo){
                   ?>
@@ -52,13 +54,24 @@
                         echo $HosterDataInfo['first_name'] . " " . $HosterDataInfo['last_name']
                       ?>
                     </td> 
-                    <td><?php echo $HosterDataInfo['mobile']?></td>
+                    <td><?php echo $HosterDataInfo['email']?></td>
+                    <td><?php echo $HosterDataInfo['phone']?></td>
                     <td><?php echo $HosterDataInfo['commity_name']?></td>
                     <td><?php echo $HosterDataInfo['position_name']?></td>
-                    <td>
-                      <a href="#" class="btn btn-primary">Edit <i class="far fa-edit ml-1"></i></a>
-                      <a href="#" class="btn btn-warning">View <i class="far fa-eye ml-1"></i></a>
-                      <a href="#" class="btn btn-danger">Delete <i class="far fa-trash-alt ml-1"></i></a>
+
+                    <td><?php 
+                    
+                        if($HosterDataInfo['old'] == "1"){
+                          echo " Old Board ";
+                        }else{
+                          echo " current Board ";
+                        }
+
+                    ?></td>
+
+                    <td><a href="update_hoster.php?id=<?php echo $HosterDataInfo['id']?>" class="btn btn-primary"><i class="table_icon far fa-edit ml-1"></i></a></td>
+                    <td><a href="profile.php?from=hosters&id=<?php echo $HosterDataInfo['id']?>" class="btn btn-warning"><i class="table_icon far fa-id-badge ml-1"></i></a></td>
+                    <td><a href="delete.php?from=hosters&id=<?php echo  $HosterDataInfo['id'];?>" class="btn btn-danger"><i class="table_icon far fa-trash-alt ml-1"></i></a></td>
                     </td>
                   </tr>
                   <?php 
@@ -80,12 +93,4 @@
 
 
 <?php 
-    } else {
-      header("Location:index.php");
-      exit();
-    }
-  } else {
-    header("Location:index.php");
-    exit();
-  } 
 ?>

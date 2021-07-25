@@ -8,9 +8,9 @@
 ==========================
 */
 
-function insert_member ($f_name , $l_name , $email , $phone , $birthday ,$commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$img){
+function insert_member ($f_name , $l_name , $email , $phone , $birthday ,$commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$old,$img){
     global $con;
-    $stmt = $con->prepare("INSERT INTO members(first_name,last_name,email,birthday,phone,commity,season,university,collage_name,collage_year,about,facebook,twitter,insta,linked_in,img) Value(:first_name,:last_name,:email,:birthday,:phone,:commity,:season,:university,:collage_name,:collage_year,:about,:facebook,:twitter,:insta,:linked_in,:img)");
+    $stmt = $con->prepare("INSERT INTO members(first_name,last_name,email,birthday,phone,commity,season,university,collage_name,collage_year,about,facebook,twitter,insta,linked_in,img,old_member) Value(:first_name,:last_name,:email,:birthday,:phone,:commity,:season,:university,:collage_name,:collage_year,:about,:facebook,:twitter,:insta,:linked_in,:img,:old)");
     $stmt->execute(
     array(
         ":first_name"       => $f_name,
@@ -18,7 +18,7 @@ function insert_member ($f_name , $l_name , $email , $phone , $birthday ,$commit
         ":email"            => $email,
         ":birthday"         => $birthday,
         ":phone"            => $phone,
-        ":commity"        => $commity,
+        ":commity"          => $commity,
         ":season"           => $season,
         ":university"       => $university,
         ":collage_name"     => $collage_name,
@@ -28,7 +28,8 @@ function insert_member ($f_name , $l_name , $email , $phone , $birthday ,$commit
         ":twitter"          => $twitter,
         ":insta"            => $insta,
         ":linked_in"        => $linked_in,
-        ":img"              => $img
+        ":img"              => $img,
+        ":old"              => $old,
     ));
     echo "
     <script>
@@ -44,9 +45,9 @@ function insert_member ($f_name , $l_name , $email , $phone , $birthday ,$commit
 ==========================
 */
 
-function  update_member ($member_id,$f_name , $l_name , $email , $phone , $birthday ,$commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$img){
+function  update_member ($member_id,$f_name , $l_name , $email , $phone , $birthday ,$commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$img,$old){
     global $con;
-    $stmt = $con->prepare("UPDATE members SET first_name = ?,last_name = ?,email = ?,birthday = ?,phone = ?,commity = ?,season = ?,university = ?,collage_name = ?,collage_year = ?,about = ?,facebook = ?,twitter = ?,insta = ?,linked_in = ?,img = ? WHERE id =?");
+    $stmt = $con->prepare("UPDATE members SET first_name = ?,last_name = ?,email = ?,birthday = ?,phone = ?,commity = ?,season = ?,university = ?,collage_name = ?,collage_year = ?,about = ?,facebook = ?,twitter = ?,insta = ?,linked_in = ?,img = ? , old_member = ? WHERE id =?");
     $stmt->execute(
     array(
         $f_name,
@@ -65,6 +66,7 @@ function  update_member ($member_id,$f_name , $l_name , $email , $phone , $birth
         $insta,
         $linked_in,
         $img,
+        $old,
         $member_id
 
     ));
@@ -109,10 +111,248 @@ function getData_with_id($table,$id){
 // selectHighBoard
 function selectHighBoard(){
     global $con; 
-    $stmt = $con->prepare("SELECT * FROM hosters WHERE position_name != :Member");
-    $stmt->execute(array(
-        ':Member' => "Member"
-    ));
+    $stmt = $con->prepare("SELECT * FROM hosters");
+    $stmt->execute(array());
     return $stmt->fetchAll();
 }
 
+/**/
+
+
+
+
+/*
+==========================  
+  insert new Hoster By/ Amr Mohamed
+==========================
+*/
+
+function  insert_hoster ($first_name , $last_name , $email , $password , $phone , $birthday , $position , $commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$img ,$old){
+    global $con;
+    $stmt = $con->prepare("INSERT INTO hosters(first_name,last_name,email,password,birthday,phone,position_name,commity_name,season_year,university_name,college_name,college_year,about_hoster,facebook,twitter,instgram,linked_in,photo,old) Value(:first_name,:last_name,:email,:password,:birthday,:phone,:position_name,:commity,:season,:university,:college_name,:collage_year,:about_hoster,:facebook,:twitter,:instgram,:linked_in,:photo,:old)");
+    $stmt->execute(
+    array(
+        ":first_name"       => $first_name,
+        ":last_name"        => $last_name,
+        ":email"            => $email,
+        ":password"         => $password,
+        ":birthday"         => $birthday,
+        ":phone"            => $phone,
+        ":position_name"    => $position,
+        ":commity"          => $commity,
+        ":season"           => $season,
+        ":university"       => $university,
+        ":college_name"     => $collage_name,
+        ":collage_year"     => $collage_year,
+        ":about_hoster"     => $about,
+        ":facebook"         => $facebook,
+        ":twitter"          => $twitter,
+        ":instgram"            => $insta,
+        ":linked_in"        => $linked_in,
+        ":photo"            => $img,
+        ":old"              => $old,
+    ));
+    echo "
+    <script>
+        toastr.success('Great , Hoster has been successfully added .')
+    </script>";
+    header("Refresh:3;url=hosters.php");
+}
+
+
+
+
+/*
+==========================  
+  update Hoster information By/ Amr Mohamed
+==========================
+*/
+
+function  update_hoster ($hoster_id,$first_name , $last_name , $email , $password , $phone , $birthday , $position , $commity ,$season ,$university ,$collage_name ,$collage_year ,$about ,$facebook ,$twitter ,$insta ,$linked_in,$img ,$old){
+    global $con;
+    $stmt = $con->prepare("UPDATE hosters SET first_name = ?,last_name = ?,email = ?,password=?,birthday = ?,phone = ?,commity_name = ?,season_year = ?,position_name =?,university_name = ?,college_name = ?,college_year = ?,about_hoster = ?,facebook = ?,twitter = ?,instgram = ?,linked_in = ?,photo = ? , old = ? WHERE id =?");
+    $stmt->execute(
+    array(
+        $first_name,
+        $last_name,
+        $email,
+        $password,
+        $birthday,
+        $phone,
+        $commity,
+        $season,
+        $position,
+        $university,
+        $collage_name,
+        $collage_year,
+        $about,
+        $facebook,
+        $twitter,
+        $insta,
+        $linked_in,
+        $img,
+        $old,
+        $hoster_id
+
+    ));
+    echo "
+    <script>
+        toastr.success('Great , Hoster INFO has Been Successfully Update  .')
+    </script>";
+    header("Refresh:3;url=hosters.php");
+}
+
+
+/*
+==========================  
+count Rows from Database By/ Amr Mohamed
+==========================
+*/
+
+function count_users($colume,$databname){
+    global $con;
+    $stmt = $con->prepare("SELECT COUNT($colume) From $databname");
+    $stmt->execute();
+    $rows = $stmt->fetchColumn();
+    return $rows;
+}
+
+
+/*
+==========================  
+    insert new Hoster By/ Amr Mohamed
+==========================
+*/
+
+function insert_opinion ($name , $email ,$commity ,$season,$opinion){  
+    global $con;
+    $stmt = $con->prepare("INSERT INTO opinion(name,email,commity,season,current_season,opinion,time) Value(:name,:email,:commity,:season,:current_season,:opinion,:time)");
+    date_default_timezone_set('Africa/Cairo');
+    $_time = date("Y/m/d . h:i:s");
+    $current_season = date("Y");
+    $stmt->execute(
+    array(
+        ":name"             => $name,
+        ":email"            => $email,
+        ":commity"          => $commity,
+        ":season"           => $season,
+        ":season"           => $season,
+        ":current_season"   => $current_season,
+        ":opinion"          => $opinion,
+        ":time"             => $_time ,
+    ));
+    echo "
+    <script>
+        toastr.success('Thanks for Your Time , Your Opinion Has Been Send Successfully .')
+    </script>";
+    header("Refresh:3;url=opinion_form.php");
+}
+
+
+/*
+==========================  
+  count Members By/ Amr Mohamed
+==========================
+*/
+
+function count_comittee_members($colume,$databname,$commity){
+    global $con;
+    $stmt = $con->prepare("SELECT COUNT($colume) From $databname WHERE commity = ?");
+    $stmt->execute(array($commity));
+    $rows = $stmt->fetchColumn();
+    return $rows;
+}
+
+
+/*
+==========================  
+  count Members By/ Amr Mohamed
+==========================
+*/
+
+function getData_with_committee($table,$commity){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM $table WHERE commity = ?");
+    $stmt->execute(array($commity));
+    $rows = $stmt->fetchAll();
+    return $rows;
+}
+
+/*
+==========================  
+  update about us data  By/ Reham Osama
+==========================
+*/
+
+
+function  update_about_us ($name , $content,$about_id){
+    global $con;
+    $stmt = $con->prepare("UPDATE about_us SET section_name = ?, content = ? WHERE id =?");
+    $stmt->execute(
+    array(
+        $name,
+        $content,
+        $about_id
+
+    ));
+    echo "
+    <script>
+        toastr.success('Great , About US INFO has Been Successfully Update  .')
+    </script>";
+    header("Refresh:1;url=about.php");
+}
+
+/*
+==========================  
+  update event data  By/ Reham Osama
+==========================
+*/
+
+
+function  updateEvent($name ,$year ,$desc, $link,$img,$event_id){
+    global $con;
+    $stmt = $con->prepare("UPDATE event SET ename = ?, eyear = ?,img = ?, descrip = ?,link = ? WHERE id =?");
+    $stmt->execute(
+    array(
+        $name,
+        $year,
+        $img,
+        $desc,
+        $link,
+        $event_id
+
+    ));
+    echo "
+    <script>
+        toastr.success('Great , Event INFO has Been Successfully Update  .')
+    </script>";
+    header("Refresh:3;url=event.php");
+}
+
+
+
+
+
+/*
+==========================  
+  add new Event By/ Reham Osama
+==========================
+*/
+
+function addEvent($name ,$year ,$desc, $link,$img){
+    global $con;
+    $stmt = $con->prepare("INSERT INTO event(ename,eyear,img,descrip,link) VALUE(:eName,:year,:Img,:desc,:link)");
+    $stmt->execute(array(
+        ":eName"         =>  $name,
+        ":Img"          =>  $img,
+        ":desc"          =>  $desc,
+        ":year"          =>  $year,
+        ":link"          =>  $link
+    ));
+
+    echo "
+    <script>
+        toastr.success('Great , Event has been successfully added .')
+    </script>";
+    header("Refresh:3;url=event.php");
+}
